@@ -1,4 +1,4 @@
-import { lineCheck } from "../src/haiku.js";
+import lineCheck from "../src/line-check.js";
 
 // Check number of lines from user input
 describe("lineCheck function", () => {
