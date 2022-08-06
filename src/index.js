@@ -11,8 +11,10 @@ $(document).ready(function () {
   $("#submitQuery").click(function () {
     event.preventDefault();
     const textEntered = $("#userEntered").val();
-    $(".results").text(
-      `Number of lines in text entered: ${lineCheck(textEntered)}`
+    const results = $(".results").text(
+      `Number of lines in text entered: ${lineCheck(textEntered)}.\n
+      Text separated into lines: ${JSON.stringify(textToLine(textEntered))}`
     );
+    results.html(results.html().replace(/\n/g, "<br/>"));
   });
 });
