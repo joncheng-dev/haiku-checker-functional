@@ -37,8 +37,8 @@ $(document).ready(function () {
           <td>${k + 1}</td>
           <td>${JSON.stringify(textSeparated[k])}</td>
           <td>${syllableCountLine(lineToWords(textSeparated[k]))}</td>
-          <td>${lineToWords(textSeparated[k])[0]}</td>
-          <td>${syllableCount(lineToWords(textSeparated[k])[0])}</td>
+          <td>${onlyChars(lineToWords(textSeparated[k])[0])}</td>
+          <td>${syllableCount(onlyChars(lineToWords(textSeparated[k])[0]))}</td>
         </tr>`);
       // Display all other words in first line with syllables.
       for (let i = 1; i < lineToWords(textSeparated[k]).length; i++) {
@@ -47,8 +47,10 @@ $(document).ready(function () {
             <td></td>
             <td></td>
             <td></td>
-            <td>${lineToWords(textSeparated[k])[i]}</td>
-            <td>${syllableCount(lineToWords(textSeparated[k])[i])}</td>
+            <td>${onlyChars(lineToWords(textSeparated[k])[i])}</td>
+            <td>${syllableCount(
+              onlyChars(lineToWords(textSeparated[k])[i])
+            )}</td>
           </tr>`);
       }
     }
