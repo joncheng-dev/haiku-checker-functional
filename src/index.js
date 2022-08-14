@@ -18,8 +18,39 @@ $(document).ready(function () {
     const textEntered = $("#userEntered").val();
     // Separate text into individual lines.
     const textSeparated = textToLine(textEntered);
-    // Number of lines entered.
-    $(".numberLines").text(`Number of lines: ${lineCheck(textEntered)}.`);
+    //
+    //
+    // Results Summary Table:
+    $("#linesSummary").text(`${lineCheck(textEntered)}`);
+    if (lineCheck(textEntered) === 3) {
+      $("#linesSummary").css("background-color", "#94b49f");
+    } else {
+      $("#linesSummary").css("background-color", "#DF7861");
+    }
+    $("#lineOneSyllables").text(
+      syllableCountLine(lineToWords(textSeparated[0]))
+    );
+    if (syllableCountLine(lineToWords(textSeparated[0])) === 5) {
+      $("#lineOneSyllables").css("background-color", "#94b49f");
+    } else {
+      $("#lineOneSyllables").css("background-color", "#DF7861");
+    }
+    $("#lineTwoSyllables").text(
+      syllableCountLine(lineToWords(textSeparated[1]))
+    );
+    if (syllableCountLine(lineToWords(textSeparated[1])) === 7) {
+      $("#lineTwoSyllables").css("background-color", "#94b49f");
+    } else {
+      $("#lineTwoSyllables").css("background-color", "#DF7861");
+    }
+    $("#lineThreeSyllables").text(
+      syllableCountLine(lineToWords(textSeparated[2]))
+    );
+    if (syllableCountLine(lineToWords(textSeparated[2])) === 5) {
+      $("#lineThreeSyllables").css("background-color", "#94b49f");
+    } else {
+      $("#lineThreeSyllables").css("background-color", "#DF7861");
+    }
     //
     console.log(`textSeparated: ${textSeparated}`);
     console.log(`textSeparated.length: ${textSeparated.length}`);
