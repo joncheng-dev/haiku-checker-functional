@@ -14,51 +14,52 @@ $(document).ready(function () {
   $("#submitQuery").click(function () {
     event.preventDefault();
     clearFields();
+    // Color Hex Values:
+    const greenHexCode = "#94b49f";
+    const redHexCode = "#DF7861";
     // Store what the user entered
     const textEntered = $("#userEntered").val();
     // Separate text into individual lines.
     const textSeparated = textToLine(textEntered);
-    //
-    //
+    // Number of Lines in text
+    const numberLines = lineCheck(textEntered);
+
     // Results Summary Table:
-    $("#linesSummary").text(`${lineCheck(textEntered)}`);
-    if (lineCheck(textEntered) === 3) {
-      $("#linesSummary").css("background-color", "#94b49f");
-    } else {
-      $("#linesSummary").css("background-color", "#DF7861");
-    }
-    $("#lineOneSyllables").text(
-      syllableCountLine(lineToWords(textSeparated[0]))
+    $("#linesSummary").text(`${numberLines}`);
+    updateBackgroundColor("#linesSummary", numberLines === 3);
+
+    updateSyllableRow(
+      "#lineOneSyllables",
+      syllableCountLine(lineToWords(textSeparated[0])),
+      5
     );
-    if (syllableCountLine(lineToWords(textSeparated[0])) === 5) {
-      $("#lineOneSyllables").css("background-color", "#94b49f");
-    } else {
-      $("#lineOneSyllables").css("background-color", "#DF7861");
-    }
-    $("#lineTwoSyllables").text(
-      syllableCountLine(lineToWords(textSeparated[1]))
+    updateSyllableRow(
+      "#lineTwoSyllables",
+      syllableCountLine(lineToWords(textSeparated[1])),
+      7
     );
-    if (syllableCountLine(lineToWords(textSeparated[1])) === 7) {
-      $("#lineTwoSyllables").css("background-color", "#94b49f");
-    } else {
-      $("#lineTwoSyllables").css("background-color", "#DF7861");
-    }
-    $("#lineThreeSyllables").text(
-      syllableCountLine(lineToWords(textSeparated[2]))
+    updateSyllableRow(
+      "#lineThreeSyllables",
+      syllableCountLine(lineToWords(textSeparated[2])),
+      5
     );
-    if (syllableCountLine(lineToWords(textSeparated[2])) === 5) {
-      $("#lineThreeSyllables").css("background-color", "#94b49f");
-    } else {
-      $("#lineThreeSyllables").css("background-color", "#DF7861");
+
+    function updateSyllableRow(idTag, numberSyllablesItIs, numberItShouldBe) {
+      $(idTag).text(numberSyllablesItIs);
+      console.log(
+        `${idTag} has ${numberSyllablesItIs}, but should have ${numberItShouldBe}`
+      );
+      updateBackgroundColor(idTag, numberSyllablesItIs === numberItShouldBe);
+    }
+
+    function updateBackgroundColor(idTag, ifMatches) {
+      const colorCode = ifMatches ? greenHexCode : redHexCode;
+      console.log(
+        `Background color ACTIVE for ${idTag}. Color is ${colorCode}`
+      );
+      $(idTag).css("background-color", colorCode);
     }
     //
-    console.log(`textSeparated: ${textSeparated}`);
-    console.log(`textSeparated.length: ${textSeparated.length}`);
-    console.log(
-      `lineToWords(textSeparated[0]): ${lineToWords(textSeparated[0])}`
-    );
-    console.log(`textSeparated[0]: ${textSeparated[0]}`);
-    console.log(`textSeparated[0].length: ${textSeparated[0].length}`);
     // Display lines of text individually:
     for (let k = 0; k < textSeparated.length; k++) {
       // Display first line of text.
