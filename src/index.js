@@ -2,27 +2,28 @@ import $ from "jquery";
 import "bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./css/styles.css";
-import lineCheck from "./line-check.js";
+import countLinesInText from "./num-lines-in-text.js";
 import textToLine from "../src/text-to-lines.js";
 import lineToWords from "../src/line-to-words.js";
 import onlyChars from "../src/only-chars.js";
 import syllableCount from "../src/syllable-count.js";
 import syllableCountLine from "../src/syllable-count-line.js";
 
+// Color Hex Values:
+const greenHexCode = "#94b49f";
+const redHexCode = "#DF7861";
+
 // User Interface Logic
 $(document).ready(function () {
   $("#submitQuery").click(function () {
     event.preventDefault();
     clearFields();
-    // Color Hex Values:
-    const greenHexCode = "#94b49f";
-    const redHexCode = "#DF7861";
     // Store what the user entered
     const textEntered = $("#userEntered").val();
     // Separate text into individual lines.
     const textSeparated = textToLine(textEntered);
     // Number of Lines in text
-    const numberLines = lineCheck(textEntered);
+    const numberLines = countLinesInText(textEntered);
 
     // Results Summary Table:
     $("#linesSummary").text(`${numberLines}`);
@@ -43,22 +44,6 @@ $(document).ready(function () {
       syllableCountLine(lineToWords(textSeparated[2])),
       5
     );
-
-    function updateSyllableRow(idTag, numberSyllablesItIs, numberItShouldBe) {
-      $(idTag).text(numberSyllablesItIs);
-      console.log(
-        `${idTag} has ${numberSyllablesItIs}, but should have ${numberItShouldBe}`
-      );
-      updateBackgroundColor(idTag, numberSyllablesItIs === numberItShouldBe);
-    }
-
-    function updateBackgroundColor(idTag, ifMatches) {
-      const colorCode = ifMatches ? greenHexCode : redHexCode;
-      console.log(
-        `Background color ACTIVE for ${idTag}. Color is ${colorCode}`
-      );
-      $(idTag).css("background-color", colorCode);
-    }
     //
     // Display lines of text individually:
     for (let k = 0; k < textSeparated.length; k++) {
@@ -87,9 +72,19 @@ $(document).ready(function () {
       }
     }
   });
-
-  function clearFields() {
-    $("#submitQuery").val("");
-    $("#lineOne").empty();
-  }
 });
+
+function clearFields() {
+  $("#submitQuery").val("");
+  $("#lineOne").empty();
+}
+
+function updateSyllableRow(idTag, numberSyllablesItIs, numberItShouldBe) {
+  $(idTag).text(numberSyllablesItIs);
+  updateBackgroundColor(idTag, numberSyllablesItIs === numberItShouldBe);
+}
+
+function updateBackgroundColor(idTag, ifMatches) {
+  const colorCode = ifMatches ? greenHexCode : redHexCode;
+  $(idTag).css("background-color", colorCode);
+}
