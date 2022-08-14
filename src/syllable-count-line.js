@@ -10,13 +10,4 @@ const syllableCountLine = (array) => {
   return lineSyllableCount;
 };
 
-// for (let i = 0; i < lineToWords(textSeparated[0]).length; i++) {
-//   console.log(
-//     `Syllables: ${syllableCount(onlyChars(lineToWords(textSeparated[0])[i]))}`
-//   );
-//   lineSyllableCount =
-//     lineSyllableCount +
-//     syllableCount(onlyChars(lineToWords(textSeparated[0])[i]));
-// }
-
 export default syllableCountLine;

@@ -7,6 +7,7 @@ import textToLine from "../src/text-to-lines.js";
 import lineToWords from "../src/line-to-words.js";
 import onlyChars from "../src/only-chars.js";
 import syllableCount from "../src/syllable-count.js";
+import syllableCountLine from "../src/syllable-count-line.js";
 
 // User Interface Logic
 $(document).ready(function () {
@@ -15,43 +16,10 @@ $(document).ready(function () {
     clearFields();
     // Store what the user entered
     const textEntered = $("#userEntered").val();
-
     // Separate text into individual lines.
     const textSeparated = textToLine(textEntered);
-    // First line -- words separated
-    const wordsInLineOne = lineToWords(textSeparated[0]);
-    // First line -- Total syllables
-    console.log(`COUNT LINE SYLLABLES`);
-    console.log(`Line: ${lineToWords(textSeparated[0])}`);
-    // Individual words' syllables.
-    let lineSyllableCount = 0;
-    for (let i = 0; i < lineToWords(textSeparated[0]).length; i++) {
-      console.log(
-        `Syllables: ${syllableCount(
-          onlyChars(lineToWords(textSeparated[0])[i])
-        )}`
-      );
-      lineSyllableCount =
-        lineSyllableCount +
-        syllableCount(onlyChars(lineToWords(textSeparated[0])[i]));
-    }
-    console.log(`Syllables for this line: ${lineSyllableCount}`);
-
-    // Second line -- words separated
-    const wordsInLineTwo = lineToWords(textSeparated[1]);
-    console.log(`wordsInLineTwo: ${wordsInLineTwo}`);
-    // Second line -- print words individually
-    for (let i = 0; i < wordsInLineTwo.length; i++) {
-      console.log(wordsInLineTwo[i]);
-    }
     // Number of lines entered.
-    $(".numberLines").text(
-      `Number of lines in text entered: ${lineCheck(textEntered)}.`
-    );
-    //
-    //
-    //
-    //
+    $(".numberLines").text(`Number of lines: ${lineCheck(textEntered)}.`);
     //
     console.log(`textSeparated: ${textSeparated}`);
     console.log(`textSeparated.length: ${textSeparated.length}`);
@@ -68,7 +36,7 @@ $(document).ready(function () {
         <tr>
           <td>${k + 1}</td>
           <td>${JSON.stringify(textSeparated[k])}</td>
-          <td>Line Syllables</td>
+          <td>${syllableCountLine(lineToWords(textSeparated[k]))}</td>
           <td>${lineToWords(textSeparated[k])[0]}</td>
           <td>${syllableCount(lineToWords(textSeparated[k])[0])}</td>
         </tr>`);
@@ -83,11 +51,6 @@ $(document).ready(function () {
             <td>${syllableCount(lineToWords(textSeparated[k])[i])}</td>
           </tr>`);
       }
-    }
-    // Separate each line into words.
-    $(".intoWords").append(`Lines into words: `);
-    for (let i = 0; i < textSeparated.length; i++) {
-      $(".intoWords").append(JSON.stringify(lineToWords(textSeparated[i])));
     }
   });
 
