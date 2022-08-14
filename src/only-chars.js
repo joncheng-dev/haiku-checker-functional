@@ -1,8 +1,6 @@
 const onlyChars = (word) => {
-  const noPunctuation = word
-    .replace(/[-.,/#!?$%@^&*;:{}=_`~()]/g, "")
-    .replace(/\s{2,}/g, " ");
-  return noPunctuation;
+  const regex = /[^A-Za-z]/g;
+  return word.replace(regex, "");
 };
 
 export default onlyChars;
