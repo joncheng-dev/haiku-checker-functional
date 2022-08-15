@@ -20,18 +20,17 @@ $(document).ready(function () {
     clearFields();
     //
     //
-    //
-    // Store what the user entered
+    // Store text user entered
     const textEntered = $("#userEntered").val();
-    // Separate text into individual lines (stored in array).
+    // Separate text into individual lines -- in an array.
     const textSeparated = textToLine(textEntered);
-    // Number of Lines in text
+    // Counts number of Lines in user-entered text.
     const numberLines = countLinesInText(textEntered);
-    // Separate individual lines into different elements (array[0, 1, 2]).
+    // Separate text into individual lines in different elements (array[0, 1, 2]).
     const lineOneText = textSeparated[0];
     const lineTwoText = textSeparated[1];
     const lineThreeText = textSeparated[2];
-    // Separate each array element into words.
+    // Separate each individual line -- array element -- into words.
     const lineOneWords = lineToWords(lineOneText);
     const lineTwoWords = lineToWords(lineTwoText);
     const lineThreeWords = lineToWords(lineThreeText);
@@ -49,7 +48,6 @@ $(document).ready(function () {
     const lineThreeTotalSyllables = syllableCountLine(lineThreeWordsAlpha);
     //
     //
-    //
     // Results Summary Table:
     $("#linesSummary").text(`${numberLines}`);
     updateBackgroundColor("#linesSummary", numberLines === 3);
@@ -58,18 +56,10 @@ $(document).ready(function () {
     updateSyllableRow("#lineTwoSyllables", lineTwoTotalSyllables, 7);
     updateSyllableRow("#lineThreeSyllables", lineThreeTotalSyllables, 5);
 
-    updateDetailsRow("#resultsItemized", 1, lineOneText, lineOneTotalSyllables, lineOneWordsAlpha[0], lineOneWordsSyllables[0]);
-    for (let i = 1; i < lineOneWordsAlpha.length; i++) {
-      updateDetailsRow("#resultsItemized", "", "", "", lineOneWordsAlpha[i], lineOneWordsSyllables[i]);
-    }
-    updateDetailsRow("#resultsItemized", 2, lineTwoText, lineTwoTotalSyllables, lineTwoWordsAlpha[0], lineTwoWordsSyllables[0]);
-    for (let i = 1; i < lineTwoWordsAlpha.length; i++) {
-      updateDetailsRow("#resultsItemized", "", "", "", lineTwoWordsAlpha[i], lineTwoWordsSyllables[i]);
-    }
-    updateDetailsRow("#resultsItemized", 3, lineThreeText, lineThreeTotalSyllables, lineThreeWordsAlpha[0], lineThreeWordsSyllables[0]);
-    for (let i = 1; i < lineThreeWordsAlpha.length; i++) {
-      updateDetailsRow("#resultsItemized", "", "", "", lineThreeWordsAlpha[i], lineThreeWordsSyllables[i]);
-    }
+    // Results Detailed Table:
+    updateDetailsTable("#resultsItemized", 1, lineOneText, lineOneTotalSyllables, lineOneWordsAlpha, lineOneWordsSyllables);
+    updateDetailsTable("#resultsItemized", 2, lineTwoText, lineTwoTotalSyllables, lineTwoWordsAlpha, lineTwoWordsSyllables);
+    updateDetailsTable("#resultsItemized", 3, lineThreeText, lineThreeTotalSyllables, lineThreeWordsAlpha, lineThreeWordsSyllables);
 
     // // Results Itemized Table;
     // for (let k = 0; k < textSeparated.length; k++) {
@@ -125,5 +115,12 @@ $(document).ready(function () {
       <td>${individualWords}</td>
       <td>${individualWordsSyllables}</td>
     </tr>`);
+  }
+
+  function updateDetailsTable(idTag, lineNumber, textOfLine, lineTotalSyllables, individualWords, individualWordsSyllables) {
+    updateDetailsRow(idTag, lineNumber, textOfLine, lineTotalSyllables, individualWords[0], individualWordsSyllables[0]);
+    for (let i = 1; i < individualWords.length; i++) {
+      updateDetailsRow(idTag, "", "", "", individualWords[i], individualWordsSyllables[i]);
+    }
   }
 });
