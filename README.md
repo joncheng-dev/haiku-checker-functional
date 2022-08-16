@@ -1,6 +1,6 @@
-# (Application Name)
+# Haiku Checker
 
-#### (Brief Description of Application)
+#### Enter text, click submit, and see if your text qualifies as a haiku.
 
 #### By Jonathan Cheng
 
@@ -8,10 +8,19 @@
 
 - HTML
 - CSS
+- Bootstrap
 - JavaScript
 - JQuery
+- webpack
+- Node.js
 
 ## Description
+
+- Enter some text, hit submit, and see if it fits the conditions of a haiku. A haiku must have:
+- three lines
+- Line 1 has five syllables.
+- Line 2 has seven syllables.
+- Line 3 has five syllables.
 
 ## Setup/Installation Requirements
 
@@ -20,11 +29,12 @@
 
 ## Known Bugs
 
-- _Any known issues_
-- _should go here_
+- _Entering spaces in a line by itself can count as a line._
+- _Empty spaces after text or a line may count as a word._
+- _Entering less than three lines causes the app to not display any results at all._
 
 ## License
 
-Copyright (c) YEAR Jonathan Cheng
+Copyright (c) 2022 Jonathan Cheng
 
 ## Contact Information

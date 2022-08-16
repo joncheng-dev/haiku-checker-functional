@@ -48,6 +48,12 @@ $(document).ready(function () {
     const lineThreeTotalSyllables = syllableCountLine(lineThreeWordsAlpha);
     //
     //
+    // Results Table:
+    appendFinalResultsRow(
+      "#results",
+      numberLines === 3 && lineOneTotalSyllables === 5 && lineTwoTotalSyllables === 7 && lineThreeTotalSyllables === 5
+    );
+
     // Results Summary Table:
     $("#linesSummary").text(`${numberLines}`);
     updateBackgroundColor("#linesSummary", numberLines === 3);
@@ -56,39 +62,15 @@ $(document).ready(function () {
     updateSyllableRow("#lineTwoSyllables", lineTwoTotalSyllables, 7);
     updateSyllableRow("#lineThreeSyllables", lineThreeTotalSyllables, 5);
 
-    // Results Detailed Table:
-    updateDetailsTable("#resultsItemized", 1, lineOneText, lineOneTotalSyllables, lineOneWordsAlpha, lineOneWordsSyllables);
-    updateDetailsTable("#resultsItemized", 2, lineTwoText, lineTwoTotalSyllables, lineTwoWordsAlpha, lineTwoWordsSyllables);
-    updateDetailsTable("#resultsItemized", 3, lineThreeText, lineThreeTotalSyllables, lineThreeWordsAlpha, lineThreeWordsSyllables);
-
-    // // Results Itemized Table;
-    // for (let k = 0; k < textSeparated.length; k++) {
-    //   // Display first line of text.
-    //   // Display first word in line with syllables.
-    //   $("#resultsItemized").append(`
-    //   <tr>
-    //     <td>${k + 1}</td>
-    //     <td>${textSeparated[k]}</td>
-    //     <td>${syllableCountLine(lineToWords(textSeparated[k]))}</td>
-    //     <td>${onlyChars(lineToWords(textSeparated[k])[0])}</td>
-    //     <td>${syllableCount(onlyChars(lineToWords(textSeparated[k])[0]))}</td>
-    //   </tr>`);
-    //   // Display all other words in first line with syllables.
-    //   for (let i = 1; i < lineToWords(textSeparated[k]).length; i++) {
-    //     $("#resultsItemized").append(`
-    //     <tr>
-    //       <td></td>
-    //       <td></td>
-    //       <td></td>
-    //       <td>${onlyChars(lineToWords(textSeparated[k])[i])}</td>
-    //       <td>${syllableCount(onlyChars(lineToWords(textSeparated[k])[i]))}</td>
-    //     </tr>`);
-    //   }
-    // }
+    // Results Itemized Table:
+    updateItemizedRow("#resultsItemized", 1, lineOneText, lineOneTotalSyllables, lineOneWordsAlpha, lineOneWordsSyllables);
+    updateItemizedRow("#resultsItemized", 2, lineTwoText, lineTwoTotalSyllables, lineTwoWordsAlpha, lineTwoWordsSyllables);
+    updateItemizedRow("#resultsItemized", 3, lineThreeText, lineThreeTotalSyllables, lineThreeWordsAlpha, lineThreeWordsSyllables);
   });
 
   function clearFields() {
     $("#submitQuery").val("");
+    $("#results").empty();
     $("#linesSummary").empty();
     $("#lineOneSyllables").empty();
     $("#lineTwoSyllables").empty();
@@ -96,8 +78,19 @@ $(document).ready(function () {
     $("#resultsItemized").empty();
   }
 
+  function appendFinalResultsRow(idTag, ifMatches) {
+    const haikuOrNot = ifMatches ? "Yes, this is meets the conditions of a haiku" : "No, this does not meet the conditions of a haiku.";
+    $(idTag).append(`
+      <tr>
+        <td>${haikuOrNot}</td>
+      </tr>
+      `);
+    updateBackgroundColor(idTag, ifMatches);
+  }
+
   function updateSyllableRow(idTag, numberSyllablesItIs, numberItShouldBe) {
     $(idTag).text(numberSyllablesItIs);
+
     updateBackgroundColor(idTag, numberSyllablesItIs === numberItShouldBe);
   }
 
@@ -106,7 +99,7 @@ $(document).ready(function () {
     $(idTag).css("background-color", colorCode);
   }
 
-  function updateDetailsRow(idTag, lineNumber, textOfLine, lineTotalSyllables, individualWords, individualWordsSyllables) {
+  function appendItemizedRow(idTag, lineNumber, textOfLine, lineTotalSyllables, individualWords, individualWordsSyllables) {
     $(idTag).append(`
     <tr>
       <td>${lineNumber}</td>
@@ -117,10 +110,10 @@ $(document).ready(function () {
     </tr>`);
   }
 
-  function updateDetailsTable(idTag, lineNumber, textOfLine, lineTotalSyllables, individualWords, individualWordsSyllables) {
-    updateDetailsRow(idTag, lineNumber, textOfLine, lineTotalSyllables, individualWords[0], individualWordsSyllables[0]);
+  function updateItemizedRow(idTag, lineNumber, textOfLine, lineTotalSyllables, individualWords, individualWordsSyllables) {
+    appendItemizedRow(idTag, lineNumber, textOfLine, lineTotalSyllables, individualWords[0], individualWordsSyllables[0]);
     for (let i = 1; i < individualWords.length; i++) {
-      updateDetailsRow(idTag, "", "", "", individualWords[i], individualWordsSyllables[i]);
+      appendItemizedRow(idTag, "", "", "", individualWords[i], individualWordsSyllables[i]);
     }
   }
 });
